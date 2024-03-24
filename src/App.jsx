@@ -35,7 +35,7 @@ const App = () => {
   } = useForm({
     resolver: yupResolver(schema),
   });
-  const rollups = useRollups("0x70ac08179605AF2D9e75782b8DEcDD3c22aA4D0C");
+  // const rollups = useRollups("0x70ac08179605AF2D9e75782b8DEcDD3c22aA4D0C");
 
 
 
@@ -46,33 +46,37 @@ const App = () => {
       toast.error("Invalid address value");
       return;
     }
-    // try {
-    //   if (data.dapp) {
-    //     try {
-    //       let str = cartesi_wallet.ether_deposit_process();
-    //       let payload = ethers.utils.toUtf8Bytes(str);
+    try {
+      // if (data.dapp) {
+      //   try {
+      //     let str = cartesi_wallet.ether_deposit_process();
+      //     let payload = ethers.utils.toUtf8Bytes(str);
 
-    //       const result = await rollups.inputContract.addInput(data.dapp, payload);
-    //       toast.info("waiting for confirmation...");
-    //       const receipt = await result.wait(1);
-    //       reset();
-    //       // Search for the InputAdded event
-    //       setIsSubmitLoading(true)
-    //       toast("Ether Deposited sucessfully");
+      //     const result = await rollups.inputContract.addInput(data.dapp, payload);
+      //     toast.info("waiting for confirmation...");
+      //     const receipt = await result.wait(1);
+      //     reset();
+      //     // Search for the InputAdded event
+      //     setIsSubmitLoading(true)
+      //     toast("Ether Deposited sucessfully");
 
-    //     } catch (e) {
-    //       console.log(`${e}`);
-    //     }
-    //   }
-    //   setIsSubmitLoading(false)
-    // } catch (error) {
-    //   setIsSubmitLoading(false)
-    //   console.log("Error", error);
-    //   setError("name", {
-    //     type: "manual",
-    //     message: error.message,
-    //   });
-    // }
+      //   } catch (e) {
+      //     console.log(`${e}`);
+      //   }
+      // }
+      setIsSubmitLoading(true);
+      setTimeout(() => {
+        setIsSubmitLoading(false);
+        toast.success("processing transaction")
+      }, 5000);
+    } catch (error) {
+      setIsSubmitLoading(false)
+      console.log("Error", error);
+      setError("name", {
+        type: "manual",
+        message: error.message,
+      });
+    }
   }
 
 
@@ -231,7 +235,7 @@ const App = () => {
           {!wallet?.accounts ?
             <button onClick={() => connect()} className={`bg-blue-500 w-full h-12 text-white font-bold text-xl rounded-md`}>Connect Wallet</button>
             :
-            <button type="submit" className={`bg-blue-500 w-full h-12 text-white font-bold text-xl rounded-md`}>Process</button>
+            <button disabled={isSubmitLoading} type="submit" className={`bg-black w-full h-12 text-white font-bold text-xl rounded-md disabled:opacity-30`}>{isSubmitLoading ? "Loading" : "Process"}</button>
           }
         </div>
       </form>
