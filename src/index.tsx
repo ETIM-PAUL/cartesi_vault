@@ -12,15 +12,38 @@
 
 import React from "react";
 import App from "./App";
+import configFile from "./config.json";
 import reportWebVitals from "./reportWebVitals";
 import "./index.css";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { Web3OnboardProvider, init } from '@web3-onboard/react'
+import injectedModule from '@web3-onboard/injected-wallets'
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 const container = document.getElementById("root");
 const root = createRoot(container!); // createRoot(container!) if you use TypeScript
+
+const config = configFile;
+
+const injected = injectedModule();
+const web3Onboard = init({
+  wallets: [injected],
+  chains: Object.entries(config).map(([k, v], i) => ({
+    id: k,
+    token: v.token,
+    label: v.label,
+    rpcUrl: v.rpcUrl,
+  })),
+  appMetadata: {
+    name: "Cartesi Rollups Test DApp",
+    icon: "<svg><svg/>",
+    description: "Demo app for Cartesi Rollups",
+    recommendedInjectedWallets: [
+      { name: "MetaMask", url: "https://metamask.io" },
+    ],
+  },
+});
 
 const router = createBrowserRouter([
   {
@@ -31,8 +54,10 @@ const router = createBrowserRouter([
 
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
-    <ToastContainer />
+    <Web3OnboardProvider web3Onboard={web3Onboard}>
+      <RouterProvider router={router} />
+      <ToastContainer />
+    </Web3OnboardProvider>
   </React.StrictMode>
 );
 
