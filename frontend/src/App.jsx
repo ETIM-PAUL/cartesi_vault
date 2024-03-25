@@ -45,7 +45,6 @@ const App = () => {
   }, [])
 
   const sendTransaction = async (data) => {
-    setIsSubmitLoading(true)
     if (!isAddress(data.dapp)) {
       toast.error("Invalid address value");
       return;
@@ -59,11 +58,11 @@ const App = () => {
 
         const result = await rollups.inputContract.addInput(data.dapp, payload);
         console.log("waiting for confirmation...");
-        console.log("result", result)
+
+        const receipt = await result.wait(1);
         toast("Your transaction has been received is being processed");
         setIsSubmitLoading(false)
         reset();
-        const receipt = await result.wait(1);
         // Search for the InputAdded event
         const event = receipt.events?.find((e) => e.event === "InputAdded");
 
@@ -80,7 +79,6 @@ const App = () => {
     }
   }
   const etherTrf = async (data) => {
-    setIsSubmitLoading(true)
     if (!isAddress(data.dapp)) {
       toast.error("Invalid receiver value");
       return;
@@ -98,7 +96,7 @@ const App = () => {
         reset();
         // Search for the InputAdded event
         const event = receipt.events?.find((e) => e.event === "InputAdded");
-        toast("Ether Deposited sucessfully");
+        toast("Ether Transfered sucessfully");
         setIsSubmitLoading(false)
 
       }
@@ -112,7 +110,6 @@ const App = () => {
     }
   }
   const etherWit = async (data) => {
-    setIsSubmitLoading(true)
     if (!isAddress(data.dapp)) {
       toast.error("Invalid address value");
       return;
@@ -145,7 +142,6 @@ const App = () => {
   }
 
   const erc20Transfer = async (data) => {
-    setIsSubmitLoading(true)
     if (!isAddress(data.dapp)) {
       toast.error("Invalid address value");
       return;
@@ -161,10 +157,10 @@ const App = () => {
         console.log("waiting for confirmation...");
         console.log("waiting for confirmation...");
         console.log("result", result)
+        const receipt = await result.wait(1);
         toast("Your transaction has been received is being processed");
         setIsSubmitLoading(false)
         reset();
-        const receipt = await result.wait(1);
         // toast("Ether Deposited sucessfully");
         // setIsSubmitLoading(false)
         // Search for the InputAdded event
@@ -182,7 +178,6 @@ const App = () => {
   }
 
   const erc20Withdraw = async (data) => {
-    setIsSubmitLoading(true)
     if (!isAddress(data.erc20)) {
       toast.error("Invalid ERC20 address value");
       return;

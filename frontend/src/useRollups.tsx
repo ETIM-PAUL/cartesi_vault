@@ -19,18 +19,8 @@ import {
     CartesiDApp__factory,
     InputBox,
     InputBox__factory,
-    EtherPortal,
-    EtherPortal__factory,
-    ERC20Portal,
-    ERC20Portal__factory,
-    ERC721Portal,
-    ERC721Portal__factory,
     DAppAddressRelay,
     DAppAddressRelay__factory,
-    ERC1155SinglePortal,
-    ERC1155SinglePortal__factory,
-    ERC1155BatchPortal,
-    ERC1155BatchPortal__factory
 } from "./generated/rollups";
 import { ConnectedChain } from "@web3-onboard/core";
 
