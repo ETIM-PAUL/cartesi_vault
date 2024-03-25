@@ -19,7 +19,6 @@
         "axios": "^1.6.7",
         "buffer": "^6.0.3",
         "cacheable-request": "^10.2.7",
-        "cartesi-wallet": "^1.0.5",
         "ethers": "5.7.2",
         "graphql": "^16.4.0",
         "loader-utils": "3.2.1",
