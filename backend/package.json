@@ -4,14 +4,22 @@
   "description": "Cartesi Echo JS DApp",
   "dependencies": {
     "cartesi-wallet": "^1.0.5",
-    "ethers": "^5.5.4"
+    "ethers": "^6.7.1",
+    "viem": "^2.5.0",
+    "@types/node": "^20",
+    "esbuild": "^0.19",
+    "npm-run-all": "^4",
+    "openapi-typescript": "^6",
+    "ts-node": "^10",
+    "typescript": "^5",
+    "vitest": "^0.34"
   },
   "devDependencies": {
     "webpack": "^5.44.0",
     "webpack-cli": "^4.7.2"
   },
   "scripts": {
-    "backend": "sunodo run --no-backend",
+    "no-backend": "sunodo run --no-backend",
     "build": "webpack --entry ./dapp.js --mode production",
     "start": "ROLLUP_HTTP_SERVER_URL=\"http://127.0.0.1:8080/host-runner\" node dapp.js"
   },
